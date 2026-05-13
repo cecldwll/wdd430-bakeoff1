@@ -79,16 +79,16 @@ This task breakdown organizes work by **user story** (the core unit of delivery)
 
 **User Story Tasks**:
 
-- [ ] T021 [P] [US1] Create signup form component in `frontend/src/routes/auth/signup/+page.svelte`
-- [ ] T022 [P] [US1] Implement email signup API route in `frontend/src/routes/api/auth/signup/+server.ts`
-- [ ] T023 [P] [US1] Implement email verification flow in `frontend/src/routes/api/auth/verify-email/+server.ts`
-- [ ] T024 [US1] Create email verification UI route in `frontend/src/routes/auth/verify/+page.svelte`
-- [ ] T025 [US1] Implement authenticated dashboard showing user's scrapboards in `frontend/src/routes/dashboard/+page.svelte`
-- [ ] T026 [P] [US1] Implement create scrapboard API in `frontend/src/routes/api/scrapboards/+server.ts`
-- [ ] T027 [P] [US1] Build scrapboard canvas component in `frontend/src/components/Scrapboard.svelte` (blank state)
-- [ ] T028 [US1] Implement auto-save functionality in `frontend/src/lib/autosave.ts`
-- [ ] T029 [US1] Write unit tests for signup, verification, and scrapboard creation in `tests/unit/auth.test.ts`
-- [ ] T030 [US1] Write integration tests for User Story 1 in `tests/integration/us1-create-scrapboard.test.ts`
+- [x] T021 [P] [US1] Create signup form component in `frontend/src/routes/auth/signup/+page.svelte`
+- [x] T022 [P] [US1] Implement email signup API route in `frontend/src/routes/api/auth/signup/+server.ts`
+- [x] T023 [P] [US1] Implement email verification flow in `frontend/src/routes/api/auth/verify-email/+server.ts`
+- [x] T024 [US1] Create email verification UI route in `frontend/src/routes/auth/verify/+page.svelte`
+- [x] T025 [US1] Implement authenticated dashboard showing user's scrapboards in `frontend/src/routes/dashboard/+page.svelte`
+- [x] T026 [P] [US1] Implement create scrapboard API in `frontend/src/routes/api/scrapboards/+server.ts`
+- [x] T027 [P] [US1] Build scrapboard canvas component in `frontend/src/components/Scrapboard.svelte` (blank state)
+- [x] T028 [US1] Implement auto-save functionality in `frontend/src/lib/autosave.ts`
+- [x] T029 [US1] Write unit tests for signup, verification, and scrapboard creation in `tests/unit/auth.test.ts`
+- [x] T030 [US1] Write integration tests for User Story 1 in `tests/integration/us1-create-scrapboard.test.ts`
 
 **Test Scenario**:
 1. User signs up with email and password
