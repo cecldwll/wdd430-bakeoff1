@@ -2,10 +2,6 @@
 
 > An artistic, freeform canvas for creating and sharing handwritten notes, images, and visual connections. Sticky notes meets evidence board.
 
-![Status](https://img.shields.io/badge/status-development-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
-![Node](https://img.shields.io/badge/node-20+-brightgreen)
-
 ## ✨ Features
 
 - **📝 Typed & Handwritten Notes** — Create sticky notes or draw directly on canvas
