@@ -114,17 +114,17 @@ This task breakdown organizes work by **user story** (the core unit of delivery)
 
 **User Story Tasks**:
 
-- [ ] T031 [P] [US2] Implement create note API in `frontend/src/routes/api/notes/+server.ts` (typed and handwritten types)
-- [ ] T032 [P] [US2] Implement update note API for position, size, text in `frontend/src/routes/api/notes/[id]/+server.ts`
-- [ ] T033 [P] [US2] Implement delete note API with soft delete in `frontend/src/routes/api/notes/[id]/+server.ts`
-- [ ] T034 [P] [US2] Build note creation UI (typed/handwritten toggle) in `frontend/src/components/NoteCreator.svelte`
-- [ ] T035 [P] [US2] Build canvas drawing component for handwritten notes in `frontend/src/components/DrawingCanvas.svelte`
-- [ ] T036 [US2] Build Note component with drag-and-drop in `frontend/src/components/Note.svelte`
-- [ ] T037 [US2] Implement freeform positioning (no grid snapping) in canvas layout
-- [ ] T038 [US2] Build background theme selector component in `frontend/src/components/ThemeSelector.svelte`
-- [ ] T039 [US2] Implement undo/redo for note operations in `frontend/src/lib/undo.ts`
-- [ ] T040 [US2] Write unit tests for note creation, editing, positioning in `tests/unit/notes.test.ts`
-- [ ] T041 [US2] Write integration tests for User Story 2 in `tests/integration/us2-notes.test.ts`
+- [x] T031 [P] [US2] Implement create note API in `frontend/src/routes/api/notes/+server.ts` (typed and handwritten types)
+- [x] T032 [P] [US2] Implement update note API for position, size, text in `frontend/src/routes/api/notes/[id]/+server.ts`
+- [x] T033 [P] [US2] Implement delete note API with soft delete in `frontend/src/routes/api/notes/[id]/+server.ts`
+- [x] T034 [P] [US2] Build note creation UI (typed/handwritten toggle) in `frontend/src/components/NoteCreator.svelte`
+- [x] T035 [P] [US2] Build canvas drawing component for handwritten notes in `frontend/src/components/DrawingCanvas.svelte`
+- [x] T036 [US2] Build Note component with drag-and-drop in `frontend/src/components/Note.svelte`
+- [x] T037 [US2] Implement freeform positioning (no grid snapping) in canvas layout
+- [x] T038 [US2] Build background theme selector component in `frontend/src/components/ThemeSelector.svelte`
+- [x] T039 [US2] Implement undo/redo for note operations in `frontend/src/lib/undo.ts`
+- [x] T040 [US2] Write unit tests for note creation, editing, positioning in `tests/unit/notes.test.ts`
+- [x] T041 [US2] Write integration tests for User Story 2 in `tests/integration/us2-notes.test.ts`
 
 **Test Scenario**:
 1. User clicks "Add Note" and selects Typed
