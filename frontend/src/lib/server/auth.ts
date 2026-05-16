@@ -1,10 +1,11 @@
 import { createServerClient } from '@supabase/auth-helpers-sveltekit';
 import { redirect } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
+import { env } from '$env/dynamic/public';
 
 export const createSupabaseServerClient = ({ request, cookies }: RequestEvent) => {
-	const supabaseUrl = process.env.PUBLIC_SUPABASE_URL || '';
-	const supabaseAnonKey = process.env.PUBLIC_SUPABASE_ANON_KEY || '';
+	const supabaseUrl = env.PUBLIC_SUPABASE_URL || '';
+	const supabaseAnonKey = env.PUBLIC_SUPABASE_ANON_KEY || '';
 
 	return createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {

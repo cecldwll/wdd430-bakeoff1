@@ -1,14 +1,21 @@
 import { createServerClient } from '@supabase/auth-helpers-sveltekit';
 import { redirect } from '@sveltejs/kit';
 import type { Handle } from '@sveltejs/kit';
+import { env } from '$env/dynamic/public';
 
 /**
  * Server hook to handle authentication and route protection
  * Ensures protected routes require authentication and email verification
  */
 export const handle: Handle = async ({ event, resolve }) => {
-	const supabaseUrl = process.env.PUBLIC_SUPABASE_URL || '';
-	const supabaseAnonKey = process.env.PUBLIC_SUPABASE_ANON_KEY || '';
+	const supabaseUrl = env.PUBLIC_SUPABASE_URL || '';
+	const supabaseAnonKey = env.PUBLIC_SUPABASE_ANON_KEY || '';
+	console.error('HOOK ENV KEYS', Object.keys(env).filter((key) => key.includes('SUPABASE')));
+	console.error('HOOK PROCESS ENV KEYS', Object.keys(process.env).filter((key) => key.includes('SUPABASE')));
+	console.error('HOOK ENV', {
+		PUBLIC_SUPABASE_URL: supabaseUrl ? 'loaded' : 'missing',
+		PUBLIC_SUPABASE_ANON_KEY: supabaseAnonKey ? 'loaded' : 'missing'
+	});
 
 	// Create Supabase client
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
