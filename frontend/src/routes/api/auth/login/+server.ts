@@ -10,7 +10,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 		const { data, error } = await locals.supabase.auth.signInWithPassword({
 			email,
-			password
+			password,
 		});
 
 		if (error) {
@@ -19,14 +19,14 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 		return json({
 			success: true,
-			user: data.user
+			user: data.user,
 		});
 	} catch (error) {
 		if (error instanceof ZodError) {
 			return json(
 				{
 					message: 'Validation error',
-					errors: Object.fromEntries(error.issues.map((issue) => [issue.path[0], issue.message]))
+					errors: Object.fromEntries(error.issues.map((issue) => [issue.path[0], issue.message])),
 				},
 				{ status: 400 }
 			);

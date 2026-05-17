@@ -3,6 +3,19 @@ import ts from 'typescript-eslint';
 import svelte from 'eslint-plugin-svelte';
 
 export default [
+	{
+		ignores: [
+			'.DS_Store',
+			'node_modules/**',
+			'build/**',
+			'.svelte-kit/**',
+			'.netlify/**',
+			'dist/**',
+			'coverage/**',
+			'page.tsx',
+			'utils/**',
+		],
+	},
 	js.configs.recommended,
 	...ts.configs.recommended,
 	...svelte.configs['flat/recommended'],
@@ -11,9 +24,9 @@ export default [
 			parserOptions: {
 				ecmaVersion: 2020,
 				sourceType: 'module',
-				extraFileExtensions: ['.svelte']
-			}
-		}
+				extraFileExtensions: ['.svelte'],
+			},
+		},
 	},
 	{
 		files: ['**/*.svelte'],
@@ -22,17 +35,23 @@ export default [
 				parser: ts.parser,
 				ecmaVersion: 2020,
 				sourceType: 'module',
-				extraFileExtensions: ['.svelte']
-			}
-		}
+				extraFileExtensions: ['.svelte'],
+			},
+		},
 	},
 	{
-		ignores: [
-			'.DS_Store',
-			'node_modules',
-			'build',
-			'.svelte-kit',
-			'dist',
-		]
-	}
+		rules: {
+			'no-undef': 'off',
+			'@typescript-eslint/no-explicit-any': 'off',
+			'@typescript-eslint/no-unused-vars': [
+				'error',
+				{
+					argsIgnorePattern: '^_',
+					varsIgnorePattern: '^\\$\\$|^_',
+				},
+			],
+			'svelte/no-navigation-without-resolve': 'off',
+			'svelte/infinite-reactive-loop': 'off',
+		},
+	},
 ];

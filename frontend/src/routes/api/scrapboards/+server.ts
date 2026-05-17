@@ -5,13 +5,13 @@ import type { RequestHandler } from './$types';
 export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
 		// Check authentication
-		const { data: { user }, error: authError } = await locals.supabase.auth.getUser();
+		const {
+			data: { user },
+			error: authError,
+		} = await locals.supabase.auth.getUser();
 
 		if (authError || !user) {
-			return json(
-				{ message: 'Unauthorized' },
-				{ status: 401 }
-			);
+			return json({ message: 'Unauthorized' }, { status: 401 });
 		}
 
 		// Parse and validate request body
@@ -22,7 +22,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			return json(
 				{
 					message: 'Validation error',
-					errors: validation.error.flatten()
+					errors: validation.error.flatten(),
 				},
 				{ status: 400 }
 			);
@@ -38,17 +38,14 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				title,
 				description,
 				visibility: 'private',
-				share_token: null
+				share_token: null,
 			})
 			.select()
 			.single();
 
 		if (createError) {
 			console.error('Error creating scrapboard:', createError);
-			return json(
-				{ message: 'Failed to create scrapboard' },
-				{ status: 500 }
-			);
+			return json({ message: 'Failed to create scrapboard' }, { status: 500 });
 		}
 
 		return json(
@@ -58,16 +55,13 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 					id: scrapboard.id,
 					title: scrapboard.title,
 					description: scrapboard.description,
-					visibility: scrapboard.visibility
-				}
+					visibility: scrapboard.visibility,
+				},
 			},
 			{ status: 201 }
 		);
 	} catch (error) {
 		console.error('Create scrapboard error:', error);
-		return json(
-			{ message: 'An unexpected error occurred' },
-			{ status: 500 }
-		);
+		return json({ message: 'An unexpected error occurred' }, { status: 500 });
 	}
 };

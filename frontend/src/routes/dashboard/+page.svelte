@@ -17,12 +17,12 @@
 			const response = await fetch('/api/scrapboards', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
 					title: 'Untitled Scrapboard',
-					description: ''
-				})
+					description: '',
+				}),
 			});
 
 			const data = await response.json();
@@ -56,7 +56,7 @@
 
 		try {
 			const response = await fetch(`/api/scrapboards/${id}`, {
-				method: 'DELETE'
+				method: 'DELETE',
 			});
 
 			if (!response.ok) {
@@ -80,14 +80,9 @@
 			<h1>Welcome, {$user?.username}!</h1>
 			<p class="dashboard-subtitle">Manage your creative scrapboards</p>
 		</div>
-		<Button
-			variant="primary"
-			size="lg"
-			on:click={handleCreateScrapboard}
-			disabled={isLoading}
-		>
+		<Button variant="primary" size="lg" on:click={handleCreateScrapboard} disabled={isLoading}>
 			{#if isLoading}
-				<span class="spinner" /> Creating...
+				<span class="spinner"></span> Creating...
 			{:else}
 				+ New Scrapboard
 			{/if}

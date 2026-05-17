@@ -2,7 +2,7 @@
 	import { goto, invalidate } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { onDestroy } from 'svelte';
-	import { Button, Input } from '../../../components/ui';
+	import { Button } from '../../../components/ui';
 	import { setUser } from '$lib/stores/user';
 	import { addNotification } from '$lib/stores/ui';
 
@@ -53,9 +53,9 @@
 			const response = await fetch('/api/auth/verify-email', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ email, token: verificationCode })
+				body: JSON.stringify({ email, token: verificationCode }),
 			});
 
 			const data = await response.json();
@@ -75,7 +75,7 @@
 					username: data.user.email.split('@')[0],
 					emailVerified: true,
 					createdAt: new Date(),
-					updatedAt: new Date()
+					updatedAt: new Date(),
 				});
 			}
 
@@ -102,9 +102,9 @@
 			const response = await fetch('/api/auth/resend-verification', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ email })
+				body: JSON.stringify({ email }),
 			});
 
 			const data = await response.json();
@@ -155,7 +155,7 @@
 				class="submit-btn"
 			>
 				{#if isLoading}
-					<span class="spinner" />
+					<span class="spinner"></span>
 					Verifying...
 				{:else}
 					Verify Email
@@ -167,9 +167,7 @@
 			<p class="resend-text">
 				{#if canResend}
 					Didn't receive the code?
-					<button type="button" on:click={handleResendCode} class="resend-btn">
-						Resend
-					</button>
+					<button type="button" on:click={handleResendCode} class="resend-btn"> Resend </button>
 				{:else}
 					Resend code in <strong>{formatTime(timeRemaining)}</strong>
 				{/if}
@@ -296,7 +294,7 @@
 		margin: 0;
 	}
 
-	.submit-btn {
+	:global(.submit-btn) {
 		width: 100%;
 		margin-top: 0.5rem;
 		display: flex;

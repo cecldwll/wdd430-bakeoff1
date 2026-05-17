@@ -25,19 +25,16 @@ export const editorMode = writable<'select' | 'draw-line' | 'add-note'>('select'
 export const isDrawingLine = derived(editorMode, ($mode) => $mode === 'draw-line');
 
 // Get element by ID
-export const getNote = derived(
-	[notes, selectedElementId],
-	([$notes, $id]) => $id ? $notes.find((n) => n.id === $id) : null
+export const getNote = derived([notes, selectedElementId], ([$notes, $id]) =>
+	$id ? $notes.find((n) => n.id === $id) : null
 );
 
-export const getImage = derived(
-	[images, selectedElementId],
-	([$images, $id]) => $id ? $images.find((i) => i.id === $id) : null
+export const getImage = derived([images, selectedElementId], ([$images, $id]) =>
+	$id ? $images.find((i) => i.id === $id) : null
 );
 
-export const getLine = derived(
-	[lines, selectedElementId],
-	([$lines, $id]) => $id ? $lines.find((l) => l.id === $id) : null
+export const getLine = derived([lines, selectedElementId], ([$lines, $id]) =>
+	$id ? $lines.find((l) => l.id === $id) : null
 );
 
 // Canvas element counts

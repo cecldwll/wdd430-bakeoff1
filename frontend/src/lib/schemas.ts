@@ -9,16 +9,16 @@ export const SignUpSchema = z.object({
 		.min(8, 'Password must be at least 8 characters')
 		.regex(/[A-Z]/, 'Password must contain an uppercase letter')
 		.regex(/[0-9]/, 'Password must contain a number'),
-	username: z.string().min(2, 'Username must be at least 2 characters').max(50)
+	username: z.string().min(2, 'Username must be at least 2 characters').max(50),
 });
 
 export const LoginSchema = z.object({
 	email: z.string().email('Invalid email address'),
-	password: z.string().min(1, 'Password is required')
+	password: z.string().min(1, 'Password is required'),
 });
 
 export const ResetPasswordSchema = z.object({
-	email: z.string().email('Invalid email address')
+	email: z.string().email('Invalid email address'),
 });
 
 export const UpdatePasswordSchema = z.object({
@@ -27,7 +27,7 @@ export const UpdatePasswordSchema = z.object({
 		.string()
 		.min(8, 'Password must be at least 8 characters')
 		.regex(/[A-Z]/, 'Password must contain an uppercase letter')
-		.regex(/[0-9]/, 'Password must contain a number')
+		.regex(/[0-9]/, 'Password must contain a number'),
 });
 
 // ==================== User Schemas ====================
@@ -39,7 +39,7 @@ export const UserSchema = z.object({
 	emailVerified: z.boolean(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date(),
-	settings: z.record(z.string(), z.unknown()).optional()
+	settings: z.record(z.string(), z.unknown()).optional(),
 });
 
 export type User = z.infer<typeof UserSchema>;
@@ -50,13 +50,13 @@ export const ScrapboardVisibility = z.enum(['private', 'shared']);
 
 export const CreateScrapboardSchema = z.object({
 	title: z.string().min(1, 'Title is required').max(255),
-	description: z.string().max(1000).optional().default('')
+	description: z.string().max(1000).optional().default(''),
 });
 
 export const UpdateScrapboardSchema = z.object({
 	title: z.string().min(1, 'Title is required').max(255).optional(),
 	description: z.string().max(1000).optional(),
-	visibility: ScrapboardVisibility.optional()
+	visibility: ScrapboardVisibility.optional(),
 });
 
 export const ScrapboardSchema = z.object({
@@ -68,7 +68,7 @@ export const ScrapboardSchema = z.object({
 	shareToken: z.string().nullable(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date(),
-	deletedAt: z.coerce.date().nullable()
+	deletedAt: z.coerce.date().nullable(),
 });
 
 export type Scrapboard = z.infer<typeof ScrapboardSchema>;
@@ -82,7 +82,7 @@ export const BackgroundTheme = z.enum([
 	'kraft_paper',
 	'postcard',
 	'blue_sticky',
-	'scrap'
+	'scrap',
 ]);
 
 export type BackgroundThemeValue = z.infer<typeof BackgroundTheme>;
@@ -96,7 +96,7 @@ export const CreateNoteSchema = z.object({
 	positionY: z.number().default(0),
 	width: z.number().default(200),
 	height: z.number().default(150),
-	backgroundTheme: BackgroundTheme.default('yellow_sticky')
+	backgroundTheme: BackgroundTheme.default('yellow_sticky'),
 });
 
 export const UpdateNoteSchema = z.object({
@@ -106,7 +106,7 @@ export const UpdateNoteSchema = z.object({
 	width: z.number().optional(),
 	height: z.number().optional(),
 	backgroundTheme: BackgroundTheme.optional(),
-	zOrder: z.number().optional()
+	zOrder: z.number().optional(),
 });
 
 export const NoteSchema = z.object({
@@ -123,7 +123,7 @@ export const NoteSchema = z.object({
 	zOrder: z.number(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date(),
-	deletedAt: z.coerce.date().nullable()
+	deletedAt: z.coerce.date().nullable(),
 });
 
 export type Note = z.infer<typeof NoteSchema>;
@@ -133,12 +133,12 @@ export type Note = z.infer<typeof NoteSchema>;
 export const CreateImageSchema = z.object({
 	scrapboardId: z.string().uuid(),
 	file: z.instanceof(File).refine((file) => file.size <= 5 * 1024 * 1024, {
-		message: 'File size must be less than 5MB'
+		message: 'File size must be less than 5MB',
 	}),
 	positionX: z.number().default(0),
 	positionY: z.number().default(0),
 	width: z.number().default(300),
-	height: z.number().default(300)
+	height: z.number().default(300),
 });
 
 export const UpdateImageSchema = z.object({
@@ -146,7 +146,7 @@ export const UpdateImageSchema = z.object({
 	positionY: z.number().optional(),
 	width: z.number().optional(),
 	height: z.number().optional(),
-	rotationDegrees: z.number().default(0).optional()
+	rotationDegrees: z.number().default(0).optional(),
 });
 
 export const ImageSchema = z.object({
@@ -163,7 +163,7 @@ export const ImageSchema = z.object({
 	zOrder: z.number(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date(),
-	deletedAt: z.coerce.date().nullable()
+	deletedAt: z.coerce.date().nullable(),
 });
 
 export type Image = z.infer<typeof ImageSchema>;
@@ -179,12 +179,18 @@ export const CreateLineSchema = z.object({
 	toElementId: z.string().uuid(),
 	toElementType: z.enum(['note', 'image']),
 	style: LineStyle.default('solid'),
-	color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid color format').default('#000000')
+	color: z
+		.string()
+		.regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid color format')
+		.default('#000000'),
 });
 
 export const UpdateLineSchema = z.object({
 	style: LineStyle.optional(),
-	color: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid color format').optional()
+	color: z
+		.string()
+		.regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid color format')
+		.optional(),
 });
 
 export const LineSchema = z.object({
@@ -199,7 +205,7 @@ export const LineSchema = z.object({
 	zOrder: z.number(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date(),
-	deletedAt: z.coerce.date().nullable()
+	deletedAt: z.coerce.date().nullable(),
 });
 
 export type Line = z.infer<typeof LineSchema>;
@@ -208,7 +214,7 @@ export type Line = z.infer<typeof LineSchema>;
 
 export const CreateSharedAccessSchema = z.object({
 	scrapboardId: z.string().uuid(),
-	expiresAt: z.coerce.date().optional()
+	expiresAt: z.coerce.date().optional(),
 });
 
 export const SharedAccessSchema = z.object({
@@ -216,7 +222,7 @@ export const SharedAccessSchema = z.object({
 	scrapboardId: z.string().uuid(),
 	shareToken: z.string(),
 	expiresAt: z.coerce.date().nullable(),
-	createdAt: z.coerce.date()
+	createdAt: z.coerce.date(),
 });
 
 export type SharedAccess = z.infer<typeof SharedAccessSchema>;
@@ -227,13 +233,13 @@ export const ApiErrorSchema = z.object({
 	error: z.string(),
 	message: z.string(),
 	status: z.number(),
-	details: z.record(z.string(), z.unknown()).optional()
+	details: z.record(z.string(), z.unknown()).optional(),
 });
 
 export const ApiSuccessSchema = z.object({
 	success: z.boolean(),
 	data: z.unknown().optional(),
-	message: z.string().optional()
+	message: z.string().optional(),
 });
 
 export type ApiError = z.infer<typeof ApiErrorSchema>;

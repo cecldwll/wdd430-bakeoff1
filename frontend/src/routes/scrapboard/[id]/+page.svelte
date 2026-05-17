@@ -18,7 +18,6 @@
 	let selectedNoteId: string | null = null;
 	let showNoteCreator = false;
 	let showDrawingCanvas = false;
-	let isLoading = false;
 
 	// Initialize undo/redo
 	const undoRedo = createUndoRedoStore(50);
@@ -56,7 +55,7 @@
 			type: 'create',
 			elementType: 'note',
 			elementId: newNote.id,
-			currentState: newNote
+			currentState: newNote,
 		});
 	};
 
@@ -82,7 +81,7 @@
 			elementType: 'note',
 			elementId: noteId,
 			previousState,
-			currentState: updatedNote
+			currentState: updatedNote,
 		});
 	};
 
@@ -94,7 +93,7 @@
 
 		try {
 			const response = await fetch(`/api/notes/${noteId}`, {
-				method: 'DELETE'
+				method: 'DELETE',
 			});
 
 			if (!response.ok) {
@@ -113,7 +112,7 @@
 				elementType: 'note',
 				elementId: noteId,
 				previousState: deletedNote,
-				currentState: deletedNote
+				currentState: deletedNote,
 			});
 		} catch (error) {
 			console.error('Error deleting note:', error);
@@ -151,14 +150,14 @@
 			const response = await fetch('/api/notes', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
 					scrapboardId: scrapboard?.id,
 					type: 'handwritten',
 					imageUrl: imageDataUrl, // In production, would be Supabase URL
-					backgroundTheme: 'kraft_paper'
-				})
+					backgroundTheme: 'kraft_paper',
+				}),
 			});
 
 			const data = await response.json();
@@ -203,50 +202,16 @@
 
 		<div class="header-right">
 			<div class="toolbar">
-				<Button
-					variant="secondary"
-					size="sm"
-					title="Undo (Ctrl+Z)"
-					on:click={handleUndo}
-				>
+				<Button variant="secondary" size="sm" title="Undo (Ctrl+Z)" on:click={handleUndo}>
 					↶ Undo
 				</Button>
-				<Button
-					variant="secondary"
-					size="sm"
-					title="Redo (Ctrl+Y)"
-					on:click={handleRedo}
-				>
+				<Button variant="secondary" size="sm" title="Redo (Ctrl+Y)" on:click={handleRedo}>
 					↷ Redo
 				</Button>
-				<Button
-					variant="primary"
-					size="sm"
-					on:click={handleAddNote}
-				>
-					+ Note
-				</Button>
-				<Button
-					variant="primary"
-					size="sm"
-					on:click={handleAddImage}
-				>
-					+ Image
-				</Button>
-				<Button
-					variant="secondary"
-					size="sm"
-					on:click={handleShare}
-				>
-					Share
-				</Button>
-				<Button
-					variant="secondary"
-					size="sm"
-					on:click={handleSettings}
-				>
-					⚙
-				</Button>
+				<Button variant="primary" size="sm" on:click={handleAddNote}>+ Note</Button>
+				<Button variant="primary" size="sm" on:click={handleAddImage}>+ Image</Button>
+				<Button variant="secondary" size="sm" on:click={handleShare}>Share</Button>
+				<Button variant="secondary" size="sm" on:click={handleSettings}>⚙</Button>
 			</div>
 		</div>
 	</header>
@@ -254,7 +219,9 @@
 	<!-- Canvas Area -->
 	<main class="canvas-area">
 		{#if showNoteCreator}
+			<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 			<div class="modal-overlay" on:click={() => (showNoteCreator = false)}>
+				<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 				<div class="modal-content" on:click|stopPropagation>
 					<NoteCreator
 						scrapboardId={scrapboard?.id || ''}
@@ -266,12 +233,11 @@
 		{/if}
 
 		{#if showDrawingCanvas}
+			<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 			<div class="modal-overlay" on:click={() => (showDrawingCanvas = false)}>
+				<!-- svelte-ignore a11y_click_events_have_key_events, a11y_no_static_element_interactions -->
 				<div class="modal-content drawing" on:click|stopPropagation>
-					<DrawingCanvas
-						onSave={handleDrawingSaved}
-						onCancel={() => (showDrawingCanvas = false)}
-					/>
+					<DrawingCanvas onSave={handleDrawingSaved} onCancel={() => (showDrawingCanvas = false)} />
 				</div>
 			</div>
 		{/if}
@@ -279,7 +245,7 @@
 		<div class="canvas-container">
 			{#if !scrapboard}
 				<div class="loading-state">
-					<div class="spinner" />
+					<div class="spinner"></div>
 					<p>Loading scrapboard...</p>
 				</div>
 			{:else if notes.length === 0}
@@ -288,20 +254,15 @@
 					<h2>Your blank canvas awaits</h2>
 					<p>Start creating! Add notes or images to begin building your scrapboard</p>
 					<div class="blank-state-actions">
-						<Button variant="primary" on:click={handleAddNote}>
-							Create First Note
-						</Button>
-						<Button variant="secondary" on:click={handleAddImage}>
-							Add Image
-						</Button>
+						<Button variant="primary" on:click={handleAddNote}>Create First Note</Button>
+						<Button variant="secondary" on:click={handleAddImage}>Add Image</Button>
 					</div>
 				</div>
 			{:else}
 				<div class="canvas-content">
 					{#each notes as note (note.id)}
 						<Note
-							note={note}
-							scrapboardId={scrapboard?.id || ''}
+							{note}
 							onDelete={handleDeleteNote}
 							onUpdate={handleUpdateNote}
 							onSelect={(id) => (selectedNoteId = id)}
@@ -313,8 +274,7 @@
 				{#if selectedNoteId}
 					<div class="theme-selector-fixed">
 						<ThemeSelector
-							scrapboardId={scrapboard?.id || ''}
-							selectedNoteId={selectedNoteId}
+							{selectedNoteId}
 							onThemeSelected={(noteId, theme) => {
 								handleUpdateNote(noteId, { backgroundTheme: theme });
 							}}

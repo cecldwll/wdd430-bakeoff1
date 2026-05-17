@@ -6,13 +6,13 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 		const { id } = params;
 
 		// Check authentication
-		const { data: { user }, error: authError } = await locals.supabase.auth.getUser();
+		const {
+			data: { user },
+			error: authError,
+		} = await locals.supabase.auth.getUser();
 
 		if (authError || !user) {
-			return json(
-				{ message: 'Unauthorized' },
-				{ status: 401 }
-			);
+			return json({ message: 'Unauthorized' }, { status: 401 });
 		}
 
 		// Verify ownership before deleting
@@ -23,17 +23,11 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 			.single();
 
 		if (fetchError || !scrapboard) {
-			return json(
-				{ message: 'Scrapboard not found' },
-				{ status: 404 }
-			);
+			return json({ message: 'Scrapboard not found' }, { status: 404 });
 		}
 
 		if (scrapboard.owner_user_id !== user.id) {
-			return json(
-				{ message: 'Forbidden - you do not own this scrapboard' },
-				{ status: 403 }
-			);
+			return json({ message: 'Forbidden - you do not own this scrapboard' }, { status: 403 });
 		}
 
 		// Soft delete the scrapboard
@@ -44,21 +38,12 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 
 		if (deleteError) {
 			console.error('Error deleting scrapboard:', deleteError);
-			return json(
-				{ message: 'Failed to delete scrapboard' },
-				{ status: 500 }
-			);
+			return json({ message: 'Failed to delete scrapboard' }, { status: 500 });
 		}
 
-		return json(
-			{ success: true, message: 'Scrapboard deleted' },
-			{ status: 200 }
-		);
+		return json({ success: true, message: 'Scrapboard deleted' }, { status: 200 });
 	} catch (error) {
 		console.error('Delete error:', error);
-		return json(
-			{ message: 'An unexpected error occurred' },
-			{ status: 500 }
-		);
+		return json({ message: 'An unexpected error occurred' }, { status: 500 });
 	}
 };

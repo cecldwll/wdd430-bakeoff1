@@ -33,7 +33,11 @@
 	};
 </script>
 
-<dialog bind:this={dialogElement} on:click={handleBackdropClick} class="modal modal-{size} {className}">
+<dialog
+	bind:this={dialogElement}
+	on:click={handleBackdropClick}
+	class="modal modal-{size} {className}"
+>
 	<div class="modal-content">
 		<div class="modal-header">
 			<h2>{title}</h2>

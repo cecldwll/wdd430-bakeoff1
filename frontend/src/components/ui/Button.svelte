@@ -8,11 +8,22 @@
 		class?: string;
 	}
 
-	let { variant = 'primary', size = 'md', disabled = false, type = 'button', class: className = '' } =
-		$$props;
+	let {
+		variant = 'primary',
+		size = 'md',
+		disabled = false,
+		type = 'button',
+		class: className = '',
+	} = $$props;
 </script>
 
-<button {type} {disabled} class="btn btn-{variant} btn-{size} {className}" on:click {...$$restProps}>
+<button
+	{type}
+	{disabled}
+	class="btn btn-{variant} btn-{size} {className}"
+	on:click
+	{...$$restProps}
+>
 	<slot />
 </button>
 

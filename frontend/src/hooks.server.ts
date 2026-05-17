@@ -19,8 +19,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 				cookiesToSet.forEach(({ name, value, options }) => {
 					event.cookies.set(name, value, { path: '/', ...options });
 				});
-			}
-		}
+			},
+		},
 	});
 
 	/**
@@ -28,7 +28,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	 */
 	event.locals.getSession = async () => {
 		const {
-			data: { session }
+			data: { session },
 		} = await event.locals.supabase.auth.getSession();
 		return session;
 	};
@@ -61,12 +61,19 @@ export const handle: Handle = async ({ event, resolve }) => {
 			emailVerified: userProfile.email_verified,
 			createdAt: new Date(userProfile.created_at),
 			updatedAt: new Date(userProfile.updated_at),
-			settings: userProfile.settings ?? {}
+			settings: userProfile.settings ?? {},
 		};
 	};
 
 	// Define protected routes
-	const protectedRoutes = ['/dashboard', '/scrapboard', '/api/scrapboards', '/api/notes', '/api/images', '/api/lines'];
+	const protectedRoutes = [
+		'/dashboard',
+		'/scrapboard',
+		'/api/scrapboards',
+		'/api/notes',
+		'/api/images',
+		'/api/lines',
+	];
 
 	// Define email verification required routes
 	const emailVerificationRequiredRoutes = ['/dashboard', '/scrapboard', '/api/scrapboards'];

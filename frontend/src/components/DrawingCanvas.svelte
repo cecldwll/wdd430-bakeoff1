@@ -61,7 +61,7 @@
 		const scaleY = canvas.height / rect.height;
 		return {
 			x: (e.clientX - rect.left) * scaleX,
-			y: (e.clientY - rect.top) * scaleY
+			y: (e.clientY - rect.top) * scaleY,
 		};
 	}
 
@@ -190,8 +190,9 @@
 
 	<div class="drawing-toolbar">
 		<div class="tool-group">
-			<label class="tool-label">Brush Size:</label>
+			<label class="tool-label" for="brush-size">Brush Size:</label>
 			<input
+				id="brush-size"
 				type="range"
 				min="1"
 				max="20"
@@ -202,8 +203,9 @@
 		</div>
 
 		<div class="tool-group">
-			<label class="tool-label">Color:</label>
+			<label class="tool-label" for="brush-color">Color:</label>
 			<input
+				id="brush-color"
 				type="color"
 				bind:value={brushColor}
 				class="color-picker"
@@ -213,59 +215,30 @@
 
 		<div class="tool-group">
 			<label class="tool-label">
-				<input
-					type="checkbox"
-					bind:checked={isErasing}
-				/>
+				<input type="checkbox" bind:checked={isErasing} />
 				Eraser
 			</label>
 		</div>
 
 		<div class="tool-group spacer">
-			<Button
-				variant="secondary"
-				size="sm"
-				on:click={handleClear}
-			>
-				Clear
-			</Button>
-			<Button
-				variant="secondary"
-				size="sm"
-				on:click={handleUndo}
-				disabled
-			>
-				Undo
-			</Button>
+			<Button variant="secondary" size="sm" on:click={handleClear}>Clear</Button>
+			<Button variant="secondary" size="sm" on:click={handleUndo} disabled>Undo</Button>
 		</div>
 	</div>
 
 	<div class="canvas-wrapper">
-		<canvas
-			bind:this={canvas}
-			class="drawing-canvas"
-		></canvas>
+		<canvas bind:this={canvas} class="drawing-canvas"></canvas>
 	</div>
 
 	<div class="drawing-actions">
-		<Button
-			variant="primary"
-			on:click={handleSave}
-			disabled={isSaving}
-		>
+		<Button variant="primary" on:click={handleSave} disabled={isSaving}>
 			{#if isSaving}
-				<span class="spinner" /> Saving...
+				<span class="spinner"></span> Saving...
 			{:else}
 				Save & Create Note
 			{/if}
 		</Button>
-		<Button
-			variant="secondary"
-			on:click={handleCancel}
-			disabled={isSaving}
-		>
-			Cancel
-		</Button>
+		<Button variant="secondary" on:click={handleCancel} disabled={isSaving}>Cancel</Button>
 	</div>
 </div>
 

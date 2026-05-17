@@ -3,7 +3,10 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	// Require authentication - redirects to login if not authenticated
-	const { data: { user }, error: userError } = await locals.supabase.auth.getUser();
+	const {
+		data: { user },
+		error: userError,
+	} = await locals.supabase.auth.getUser();
 
 	if (userError || !user) {
 		throw redirect(302, '/auth/login');
@@ -21,7 +24,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 		if (fetchError) {
 			console.error('Error fetching scrapboards:', fetchError);
 			return {
-				scrapboards: []
+				scrapboards: [],
 			};
 		}
 
@@ -32,16 +35,16 @@ export const load: PageServerLoad = async ({ locals }) => {
 			description: sb.description,
 			visibility: sb.visibility,
 			createdAt: sb.created_at,
-			itemCount: 0 // Will be populated by a separate query if needed
+			itemCount: 0, // Will be populated by a separate query if needed
 		}));
 
 		return {
-			scrapboards: transformedScrapboards
+			scrapboards: transformedScrapboards,
 		};
 	} catch (error) {
 		console.error('Dashboard load error:', error);
 		return {
-			scrapboards: []
+			scrapboards: [],
 		};
 	}
 };

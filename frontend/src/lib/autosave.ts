@@ -37,9 +37,9 @@ export function createAutoSave(scrapboardId: string, options?: SaveOptions) {
 					const response = await fetch(`/api/scrapboards/${scrapboardId}/notes/${noteId}`, {
 						method: 'PATCH',
 						headers: {
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify(updates)
+						body: JSON.stringify(updates),
 					});
 
 					if (!response.ok) {
@@ -69,9 +69,9 @@ export function createAutoSave(scrapboardId: string, options?: SaveOptions) {
 					const response = await fetch(`/api/scrapboards/${scrapboardId}/images/${imageId}`, {
 						method: 'PATCH',
 						headers: {
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify(updates)
+						body: JSON.stringify(updates),
 					});
 
 					if (!response.ok) {
@@ -101,9 +101,9 @@ export function createAutoSave(scrapboardId: string, options?: SaveOptions) {
 					const response = await fetch(`/api/scrapboards/${scrapboardId}/lines/${lineId}`, {
 						method: 'PATCH',
 						headers: {
-							'Content-Type': 'application/json'
+							'Content-Type': 'application/json',
 						},
-						body: JSON.stringify(updates)
+						body: JSON.stringify(updates),
 					});
 
 					if (!response.ok) {
@@ -132,7 +132,7 @@ export function createAutoSave(scrapboardId: string, options?: SaveOptions) {
 		saveNote,
 		saveImage,
 		saveLine,
-		flushSaves
+		flushSaves,
 	};
 }
 

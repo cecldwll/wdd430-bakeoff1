@@ -37,7 +37,9 @@
 .note-bg-yellow_sticky {
 	background: linear-gradient(135deg, var(--theme-yellow-sticky-bg) 0%, #fef3c7 100%);
 	border: 2px solid var(--theme-yellow-sticky-border);
-	box-shadow: var(--theme-yellow-sticky-shadow), -2px 2px 4px rgba(0, 0, 0, 0.1);
+	box-shadow:
+		var(--theme-yellow-sticky-shadow),
+		-2px 2px 4px rgba(0, 0, 0, 0.1);
 	transform: rotate(-1deg);
 	position: relative;
 }
@@ -63,7 +65,9 @@
 .note-bg-pink_sticky {
 	background: linear-gradient(135deg, var(--theme-pink-sticky-bg) 0%, #f8d7e5 100%);
 	border: 2px solid var(--theme-pink-sticky-border);
-	box-shadow: var(--theme-pink-sticky-shadow), -2px 2px 4px rgba(0, 0, 0, 0.1);
+	box-shadow:
+		var(--theme-pink-sticky-shadow),
+		-2px 2px 4px rgba(0, 0, 0, 0.1);
 	transform: rotate(0.5deg);
 	position: relative;
 }
@@ -89,7 +93,9 @@
 .note-bg-kraft_paper {
 	background: linear-gradient(135deg, var(--theme-kraft-paper-bg) 0%, #c9a876 100%);
 	border: 2px solid var(--theme-kraft-paper-border);
-	box-shadow: var(--theme-kraft-paper-shadow), -2px 2px 4px rgba(0, 0, 0, 0.15);
+	box-shadow:
+		var(--theme-kraft-paper-shadow),
+		-2px 2px 4px rgba(0, 0, 0, 0.15);
 	transform: rotate(-0.5deg);
 	position: relative;
 	color: #5d4037;
@@ -117,7 +123,9 @@
 .note-bg-postcard {
 	background: linear-gradient(135deg, var(--theme-postcard-bg) 0%, #fbdce6 100%);
 	border: 2px solid var(--theme-postcard-border);
-	box-shadow: var(--theme-postcard-shadow), -2px 2px 4px rgba(0, 0, 0, 0.1);
+	box-shadow:
+		var(--theme-postcard-shadow),
+		-2px 2px 4px rgba(0, 0, 0, 0.1);
 	transform: rotate(1deg);
 	position: relative;
 }
@@ -154,7 +162,9 @@
 .note-bg-blue_sticky {
 	background: linear-gradient(135deg, var(--theme-blue-sticky-bg) 0%, #a5f3fc 100%);
 	border: 2px solid var(--theme-blue-sticky-border);
-	box-shadow: var(--theme-blue-sticky-shadow), -2px 2px 4px rgba(0, 0, 0, 0.1);
+	box-shadow:
+		var(--theme-blue-sticky-shadow),
+		-2px 2px 4px rgba(0, 0, 0, 0.1);
 	transform: rotate(-1.5deg);
 	position: relative;
 	color: #0c4a6e;
@@ -181,7 +191,9 @@
 .note-bg-scrap {
 	background: linear-gradient(135deg, var(--theme-scrap-bg) 0%, #d1d5db 100%);
 	border: 2px dashed var(--theme-scrap-border);
-	box-shadow: var(--theme-scrap-shadow), -2px 2px 4px rgba(0, 0, 0, 0.1);
+	box-shadow:
+		var(--theme-scrap-shadow),
+		-2px 2px 4px rgba(0, 0, 0, 0.1);
 	transform: rotate(2deg);
 	position: relative;
 	opacity: 0.9;
@@ -211,32 +223,44 @@
 /* Hover effects */
 .note--yellow-sticky:hover {
 	transform: rotate(0deg) translateY(-2px);
-	box-shadow: var(--theme-yellow-sticky-shadow), -2px 4px 8px rgba(0, 0, 0, 0.15);
+	box-shadow:
+		var(--theme-yellow-sticky-shadow),
+		-2px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .note--pink-sticky:hover {
 	transform: rotate(0deg) translateY(-2px);
-	box-shadow: var(--theme-pink-sticky-shadow), -2px 4px 8px rgba(0, 0, 0, 0.15);
+	box-shadow:
+		var(--theme-pink-sticky-shadow),
+		-2px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .note--kraft-paper:hover {
 	transform: rotate(0deg) translateY(-2px);
-	box-shadow: var(--theme-kraft-paper-shadow), -2px 4px 8px rgba(0, 0, 0, 0.2);
+	box-shadow:
+		var(--theme-kraft-paper-shadow),
+		-2px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .note--postcard:hover {
 	transform: rotate(0deg) translateY(-2px);
-	box-shadow: var(--theme-postcard-shadow), -2px 4px 8px rgba(0, 0, 0, 0.15);
+	box-shadow:
+		var(--theme-postcard-shadow),
+		-2px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .note--blue-sticky:hover {
 	transform: rotate(0deg) translateY(-2px);
-	box-shadow: var(--theme-blue-sticky-shadow), -2px 4px 8px rgba(0, 0, 0, 0.15);
+	box-shadow:
+		var(--theme-blue-sticky-shadow),
+		-2px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .note--scrap:hover {
 	transform: rotate(0deg) translateY(-2px);
-	box-shadow: var(--theme-scrap-shadow), -2px 4px 8px rgba(0, 0, 0, 0.15);
+	box-shadow:
+		var(--theme-scrap-shadow),
+		-2px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Selected state */

@@ -5,6 +5,6 @@ export const load: LayoutServerLoad = async ({ locals }) => {
 
 	return {
 		user,
-		session: locals.session
+		session: locals.session,
 	};
 };

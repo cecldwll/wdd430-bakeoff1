@@ -19,7 +19,10 @@ export const GET: RequestHandler = async ({ params, locals }) => {
 		const { id } = params;
 
 		// Check authentication
-		const { data: { user }, error: authError } = await locals.supabase.auth.getUser();
+		const {
+			data: { user },
+			error: authError,
+		} = await locals.supabase.auth.getUser();
 
 		if (authError || !user) {
 			return json({ message: 'Unauthorized' }, { status: 401 });
@@ -68,18 +71,12 @@ export const GET: RequestHandler = async ({ params, locals }) => {
 			backgroundTheme: note.background_theme,
 			zOrder: note.z_order,
 			createdAt: note.created_at,
-			updatedAt: note.updated_at
+			updatedAt: note.updated_at,
 		}));
 
-		return json(
-			{ notes: transformedNotes },
-			{ status: 200 }
-		);
+		return json({ notes: transformedNotes }, { status: 200 });
 	} catch (error) {
 		console.error('Fetch notes error:', error);
-		return json(
-			{ message: 'An unexpected error occurred' },
-			{ status: 500 }
-		);
+		return json({ message: 'An unexpected error occurred' }, { status: 500 });
 	}
 };

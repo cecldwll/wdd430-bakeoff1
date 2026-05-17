@@ -1,11 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Button, Input } from '../../../components/ui';
-	import { SignUpSchema } from '$lib/schemas';
 	import { addNotification } from '$lib/stores/ui';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
 
 	let email = '';
 	let password = '';
@@ -65,9 +61,9 @@
 			const response = await fetch('/api/auth/signup', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ email, password, username })
+				body: JSON.stringify({ email, password, username }),
 			});
 
 			const data = await response.json();
@@ -134,15 +130,9 @@
 				disabled={isLoading}
 			/>
 
-			<Button
-				variant="primary"
-				size="lg"
-				type="submit"
-				disabled={isLoading}
-				class="submit-btn"
-			>
+			<Button variant="primary" size="lg" type="submit" disabled={isLoading} class="submit-btn">
 				{#if isLoading}
-					<span class="spinner" />
+					<span class="spinner"></span>
 					Signing up...
 				{:else}
 					Sign Up
@@ -205,7 +195,7 @@
 		margin-bottom: 1.5rem;
 	}
 
-	.submit-btn {
+	:global(.submit-btn) {
 		width: 100%;
 		margin-top: 0.5rem;
 		display: flex;

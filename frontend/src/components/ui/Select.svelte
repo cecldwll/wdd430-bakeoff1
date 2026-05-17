@@ -17,17 +17,9 @@
 	{#if label}
 		<label for="select">{label}</label>
 	{/if}
-	<select
-		id="select"
-		bind:value
-		{disabled}
-		class:has-error={!!error}
-		on:change
-		on:focus
-		on:blur
-	>
+	<select id="select" bind:value {disabled} class:has-error={!!error} on:change on:focus on:blur>
 		<option value="">Select an option</option>
-		{#each options as option}
+		{#each options as option (option.value)}
 			<option value={option.value}>{option.label}</option>
 		{/each}
 	</select>

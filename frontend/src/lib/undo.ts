@@ -17,7 +17,7 @@ export class UndoRedoManager {
 	private history: HistoryEntry[] = [];
 	private currentIndex: number = -1;
 	private maxHistorySize: number = 50; // Maximum history entries to keep
-	private listeners: Set<(() => void)> = new Set();
+	private listeners: Set<() => void> = new Set();
 
 	constructor(maxSize: number = 50) {
 		this.maxHistorySize = maxSize;
@@ -96,7 +96,7 @@ export class UndoRedoManager {
 			currentIndex: this.currentIndex,
 			canUndo: this.canUndo(),
 			canRedo: this.canRedo(),
-			historySize: this.maxHistorySize
+			historySize: this.maxHistorySize,
 		};
 	}
 
@@ -167,6 +167,6 @@ export function createUndoRedoStore(maxSize: number = 50) {
 		redo: () => manager.redo(),
 		addEntry: (entry: HistoryEntry) => manager.addEntry(entry),
 		clear: () => manager.clear(),
-		getHistory: () => manager.getHistory()
+		getHistory: () => manager.getHistory(),
 	};
 }

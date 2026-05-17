@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { Button } from './ui';
 	import { addNotification } from '$lib/stores/ui';
 	import type { Note } from '$lib/schemas';
 
 	export let note: Note;
-	export let scrapboardId: string;
 	export let onDelete: ((noteId: string) => void) | undefined = undefined;
 	export let onUpdate: ((noteId: string, updates: Partial<Note>) => void) | undefined = undefined;
 	export let onSelect: ((noteId: string) => void) | undefined = undefined;
@@ -47,7 +45,7 @@
 			onUpdate(note.id, {
 				...note,
 				positionX: Math.max(0, newX),
-				positionY: Math.max(0, newY)
+				positionY: Math.max(0, newY),
 			});
 		}
 	}
@@ -72,7 +70,7 @@
 		if (onUpdate) {
 			onUpdate(note.id, {
 				...note,
-				content: editContent
+				content: editContent,
 			});
 		}
 
@@ -159,15 +157,11 @@
 
 		<!-- Options Menu -->
 		{#if showOptions}
-			<div class="note-options" on:click|stopPropagation={() => {}}>
+			<div class="note-options">
 				{#if note.type === 'typed'}
-					<button class="option-item" on:click={handleEdit}>
-						Edit Text
-					</button>
+					<button class="option-item" on:click={handleEdit}> Edit Text </button>
 				{/if}
-				<button class="option-item" on:click={handleDelete}>
-					Delete
-				</button>
+				<button class="option-item" on:click={handleDelete}> Delete </button>
 			</div>
 		{/if}
 	{/if}

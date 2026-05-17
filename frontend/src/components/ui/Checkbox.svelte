@@ -11,7 +11,7 @@
 
 <label class="checkbox {className}">
 	<input type="checkbox" {checked} {disabled} on:change />
-	<span class="checkbox-mark" />
+	<span class="checkbox-mark"></span>
 	{#if label}
 		<span class="checkbox-label">{label}</span>
 	{/if}

@@ -1,8 +1,6 @@
 <script lang="ts">
-	import { Button, Input, Select, Textarea } from './ui';
-	import { BackgroundTheme } from '$lib/schemas';
+	import { Button, Select, Textarea } from './ui';
 	import { addNotification } from '$lib/stores/ui';
-	import type { z } from 'zod';
 
 	export let scrapboardId: string;
 	export let onNoteCreated: ((note: any) => void) | undefined = undefined;
@@ -21,7 +19,7 @@
 		{ label: 'Kraft Paper', value: 'kraft_paper' },
 		{ label: 'Postcard', value: 'postcard' },
 		{ label: 'Blue Sticky', value: 'blue_sticky' },
-		{ label: 'Scrap', value: 'scrap' }
+		{ label: 'Scrap', value: 'scrap' },
 	];
 
 	const handleCreateNote = async () => {
@@ -39,7 +37,7 @@
 				type: noteType,
 				backgroundTheme: selectedTheme,
 				positionX: Math.random() * 200, // Random starting position
-				positionY: Math.random() * 200
+				positionY: Math.random() * 200,
 			};
 
 			if (noteType === 'typed') {
@@ -49,9 +47,9 @@
 			const response = await fetch('/api/notes', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(payload)
+				body: JSON.stringify(payload),
 			});
 
 			const data = await response.json();
@@ -96,21 +94,11 @@
 	<!-- Note Type Toggle -->
 	<div class="type-toggle">
 		<label class="toggle-item">
-			<input
-				type="radio"
-				value="typed"
-				bind:group={noteType}
-				name="note-type"
-			/>
+			<input type="radio" value="typed" bind:group={noteType} name="note-type" />
 			<span class:active={noteType === 'typed'}>✎ Typed</span>
 		</label>
 		<label class="toggle-item">
-			<input
-				type="radio"
-				value="handwritten"
-				bind:group={noteType}
-				name="note-type"
-			/>
+			<input type="radio" value="handwritten" bind:group={noteType} name="note-type" />
 			<span class:active={noteType === 'handwritten'}>🎨 Handwritten</span>
 		</label>
 	</div>
@@ -164,24 +152,14 @@
 
 	<!-- Actions -->
 	<div class="creator-actions">
-		<Button
-			variant="primary"
-			on:click={handleCreateNote}
-			disabled={isLoading}
-		>
+		<Button variant="primary" on:click={handleCreateNote} disabled={isLoading}>
 			{#if isLoading}
-				<span class="spinner" /> Creating...
+				<span class="spinner"></span> Creating...
 			{:else}
 				Create Note
 			{/if}
 		</Button>
-		<Button
-			variant="secondary"
-			on:click={handleCancel}
-			disabled={isLoading}
-		>
-			Cancel
-		</Button>
+		<Button variant="secondary" on:click={handleCancel} disabled={isLoading}>Cancel</Button>
 	</div>
 </div>
 

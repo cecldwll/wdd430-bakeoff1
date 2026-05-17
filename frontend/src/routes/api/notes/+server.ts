@@ -27,7 +27,10 @@ import type { RequestHandler } from './$types';
 export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
 		// Check authentication
-		const { data: { user }, error: authError } = await locals.supabase.auth.getUser();
+		const {
+			data: { user },
+			error: authError,
+		} = await locals.supabase.auth.getUser();
 
 		if (authError || !user) {
 			return json({ message: 'Unauthorized' }, { status: 401 });
@@ -41,7 +44,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			return json(
 				{
 					message: 'Validation error',
-					errors: validation.error.flatten()
+					errors: validation.error.flatten(),
 				},
 				{ status: 400 }
 			);
@@ -56,7 +59,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			positionY,
 			width,
 			height,
-			backgroundTheme
+			backgroundTheme,
 		} = validation.data;
 
 		// Verify user owns the scrapboard
@@ -75,7 +78,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		}
 
 		// Get max z-order for this scrapboard
-		const { data: maxZOrder, error: zError } = await locals.supabase
+		const { data: maxZOrder } = await locals.supabase
 			.from('notes')
 			.select('z_order')
 			.eq('scrapboard_id', scrapboardId)
@@ -99,7 +102,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				width,
 				height,
 				background_theme: backgroundTheme,
-				z_order: nextZOrder
+				z_order: nextZOrder,
 			})
 			.select()
 			.single();
@@ -124,16 +127,13 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 					height: note.height,
 					backgroundTheme: note.background_theme,
 					zOrder: note.z_order,
-					createdAt: note.created_at
-				}
+					createdAt: note.created_at,
+				},
 			},
 			{ status: 201 }
 		);
 	} catch (error) {
 		console.error('Create note error:', error);
-		return json(
-			{ message: 'An unexpected error occurred' },
-			{ status: 500 }
-		);
+		return json({ message: 'An unexpected error occurred' }, { status: 500 });
 	}
 };

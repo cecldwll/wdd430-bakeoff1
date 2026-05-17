@@ -15,8 +15,8 @@ const getProfileClient = () => {
 	return createClient(supabaseUrl, serviceRoleKey, {
 		auth: {
 			autoRefreshToken: false,
-			persistSession: false
-		}
+			persistSession: false,
+		},
 	});
 };
 
@@ -43,9 +43,7 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 
 	const profileClient = getProfileClient() ?? locals.supabase;
 	const username =
-		data.user.user_metadata?.username ??
-		data.user.email?.split('@')[0] ??
-		'new-user';
+		data.user.user_metadata?.username ?? data.user.email?.split('@')[0] ?? 'new-user';
 
 	await profileClient.from('users').upsert({
 		id: data.user.id,
@@ -56,7 +54,7 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 		email_verification_token: null,
 		reset_password_token: null,
 		updated_at: new Date().toISOString(),
-		settings: {}
+		settings: {},
 	});
 
 	throw redirect(303, '/dashboard');

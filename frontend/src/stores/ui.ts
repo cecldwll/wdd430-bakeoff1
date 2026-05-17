@@ -51,14 +51,14 @@ export const modals = writable<Record<string, Modal>>({});
 export const openModal = (type: string, data?: unknown) => {
 	modals.update((m) => ({
 		...m,
-		[type]: { type, isOpen: true, data }
+		[type]: { type, isOpen: true, data },
 	}));
 };
 
 export const closeModal = (type: string) => {
 	modals.update((m) => ({
 		...m,
-		[type]: { ...m[type], isOpen: false }
+		[type]: { ...m[type], isOpen: false },
 	}));
 };
 
@@ -67,7 +67,7 @@ export const toggleModal = (type: string, data?: unknown) => {
 		const current = m[type];
 		return {
 			...m,
-			[type]: { type, isOpen: !current?.isOpen, data }
+			[type]: { type, isOpen: !current?.isOpen, data },
 		};
 	});
 };

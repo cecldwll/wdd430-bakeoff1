@@ -5,7 +5,10 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 	const { id } = params;
 
 	// Require authentication
-	const { data: { user }, error: userError } = await locals.supabase.auth.getUser();
+	const {
+		data: { user },
+		error: userError,
+	} = await locals.supabase.auth.getUser();
 
 	if (userError || !user) {
 		throw redirect(302, '/auth/login');
@@ -37,8 +40,8 @@ export const load: PageServerLoad = async ({ params, locals }) => {
 				description: scrapboard.description,
 				visibility: scrapboard.visibility,
 				createdAt: scrapboard.created_at,
-				updatedAt: scrapboard.updated_at
-			}
+				updatedAt: scrapboard.updated_at,
+			},
 		};
 	} catch (error) {
 		console.error('Scrapboard load error:', error);

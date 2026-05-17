@@ -53,7 +53,11 @@
 					<a href="/dashboard" class="nav-link" class:active={$page.url.pathname === '/dashboard'}>
 						Dashboard
 					</a>
-					<a href="/scrapboard" class="nav-link" class:active={$page.url.pathname.startsWith('/scrapboard')}>
+					<a
+						href="/scrapboard"
+						class="nav-link"
+						class:active={$page.url.pathname.startsWith('/scrapboard')}
+					>
 						Scrapboard
 					</a>
 				{/if}
@@ -121,8 +125,8 @@
 		--color-gray-700: #374151;
 		--color-gray-800: #1f2937;
 		--color-gray-900: #111827;
-		--font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
-			sans-serif;
+		--font-sans:
+			-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 		--shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 		--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 		--shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
@@ -396,11 +400,5 @@
 
 	:global(.btn-danger:hover) {
 		background: #dc2626;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
 	}
 </style>

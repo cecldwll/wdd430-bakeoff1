@@ -13,7 +13,7 @@
 
 <label class="radio {className}">
 	<input type="radio" {name} {value} {checked} {disabled} on:change />
-	<span class="radio-mark" />
+	<span class="radio-mark"></span>
 	{#if label}
 		<span class="radio-label">{label}</span>
 	{/if}

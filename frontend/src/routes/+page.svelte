@@ -15,8 +15,8 @@
 		<p class="eyebrow">Personal creative workspace</p>
 		<h1>Digital Scrapboard</h1>
 		<p class="lede">
-			Capture typed notes, sketch handwritten ideas, arrange everything freely, and keep the
-			board saved across sessions.
+			Capture typed notes, sketch handwritten ideas, arrange everything freely, and keep the board
+			saved across sessions.
 		</p>
 		<div class="actions">
 			{#if $isAuthenticated}

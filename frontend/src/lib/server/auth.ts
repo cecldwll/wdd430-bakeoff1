@@ -3,7 +3,7 @@ import { redirect } from '@sveltejs/kit';
 import type { RequestEvent } from '@sveltejs/kit';
 import { env } from '$env/dynamic/public';
 
-export const createSupabaseServerClient = ({ request, cookies }: RequestEvent) => {
+export const createSupabaseServerClient = ({ cookies }: RequestEvent) => {
 	const supabaseUrl = env.PUBLIC_SUPABASE_URL || '';
 	const supabaseAnonKey = env.PUBLIC_SUPABASE_ANON_KEY || '';
 
@@ -14,8 +14,8 @@ export const createSupabaseServerClient = ({ request, cookies }: RequestEvent) =
 				cookiesToSet.forEach(({ name, value, options }) => {
 					cookies.set(name, value, { path: '/', ...options });
 				});
-			}
-		}
+			},
+		},
 	});
 };
 
@@ -25,7 +25,7 @@ export const createSupabaseServerClient = ({ request, cookies }: RequestEvent) =
 export const getSession = async (event: RequestEvent) => {
 	const supabase = createSupabaseServerClient(event);
 	const {
-		data: { session }
+		data: { session },
 	} = await supabase.auth.getSession();
 	return session;
 };
@@ -61,7 +61,7 @@ export const getAuthenticatedUser = async (event: RequestEvent) => {
 		emailVerified: userProfile.email_verified,
 		createdAt: new Date(userProfile.created_at),
 		updatedAt: new Date(userProfile.updated_at),
-		settings: userProfile.settings ?? {}
+		settings: userProfile.settings ?? {},
 	};
 };
 
@@ -122,8 +122,8 @@ export const signUp = async (
 		email,
 		password,
 		options: {
-			emailRedirectTo: `${new URL(event.request.url).origin}/auth/callback`
-		}
+			emailRedirectTo: `${new URL(event.request.url).origin}/auth/callback`,
+		},
 	});
 
 	if (authError) {
@@ -145,7 +145,7 @@ export const signUp = async (
 		reset_password_token: null,
 		created_at: new Date().toISOString(),
 		updated_at: new Date().toISOString(),
-		settings: {}
+		settings: {},
 	});
 
 	if (profileError) {
@@ -164,7 +164,7 @@ export const signIn = async (event: RequestEvent, email: string, password: strin
 
 	const { data, error } = await supabase.auth.signInWithPassword({
 		email,
-		password
+		password,
 	});
 
 	if (error) {
@@ -195,7 +195,7 @@ export const verifyEmail = async (event: RequestEvent, token: string) => {
 
 	const { data, error } = await supabase.auth.verifyOtp({
 		token_hash: token,
-		type: 'email'
+		type: 'email',
 	});
 
 	if (error) {
@@ -209,7 +209,7 @@ export const verifyEmail = async (event: RequestEvent, token: string) => {
 			.update({
 				email_verified: true,
 				email_verification_token: null,
-				updated_at: new Date().toISOString()
+				updated_at: new Date().toISOString(),
 			})
 			.eq('id', data.user.id);
 
@@ -228,7 +228,7 @@ export const requestPasswordReset = async (event: RequestEvent, email: string) =
 	const supabase = createSupabaseServerClient(event);
 
 	const { error } = await supabase.auth.resetPasswordForEmail(email, {
-		redirectTo: `${new URL(event.request.url).origin}/auth/reset-password`
+		redirectTo: `${new URL(event.request.url).origin}/auth/reset-password`,
 	});
 
 	if (error) {

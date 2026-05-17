@@ -39,7 +39,10 @@ export const PATCH: RequestHandler = async ({ params, request, locals }) => {
 		const { id } = params;
 
 		// Check authentication
-		const { data: { user }, error: authError } = await locals.supabase.auth.getUser();
+		const {
+			data: { user },
+			error: authError,
+		} = await locals.supabase.auth.getUser();
 
 		if (authError || !user) {
 			return json({ message: 'Unauthorized' }, { status: 401 });
@@ -72,7 +75,7 @@ export const PATCH: RequestHandler = async ({ params, request, locals }) => {
 			return json(
 				{
 					message: 'Validation error',
-					errors: validation.error.flatten()
+					errors: validation.error.flatten(),
 				},
 				{ status: 400 }
 			);
@@ -120,17 +123,14 @@ export const PATCH: RequestHandler = async ({ params, request, locals }) => {
 					height: updatedNote.height,
 					backgroundTheme: updatedNote.background_theme,
 					zOrder: updatedNote.z_order,
-					updatedAt: updatedNote.updated_at
-				}
+					updatedAt: updatedNote.updated_at,
+				},
 			},
 			{ status: 200 }
 		);
 	} catch (error) {
 		console.error('Update note error:', error);
-		return json(
-			{ message: 'An unexpected error occurred' },
-			{ status: 500 }
-		);
+		return json({ message: 'An unexpected error occurred' }, { status: 500 });
 	}
 };
 
@@ -150,7 +150,10 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 		const { id } = params;
 
 		// Check authentication
-		const { data: { user }, error: authError } = await locals.supabase.auth.getUser();
+		const {
+			data: { user },
+			error: authError,
+		} = await locals.supabase.auth.getUser();
 
 		if (authError || !user) {
 			return json({ message: 'Unauthorized' }, { status: 401 });
@@ -186,15 +189,9 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 			return json({ message: 'Failed to delete note' }, { status: 500 });
 		}
 
-		return json(
-			{ success: true, message: 'Note deleted' },
-			{ status: 200 }
-		);
+		return json({ success: true, message: 'Note deleted' }, { status: 200 });
 	} catch (error) {
 		console.error('Delete note error:', error);
-		return json(
-			{ message: 'An unexpected error occurred' },
-			{ status: 500 }
-		);
+		return json({ message: 'An unexpected error occurred' }, { status: 500 });
 	}
 };

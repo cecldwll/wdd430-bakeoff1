@@ -1,11 +1,10 @@
 <script lang="ts">
-	import { Button } from './ui';
 	import { addNotification } from '$lib/stores/ui';
 	import type { BackgroundThemeValue } from '$lib/schemas';
 
-	export let scrapboardId: string;
 	export let selectedNoteId: string | null = null;
-	export let onThemeSelected: ((noteId: string, theme: BackgroundThemeValue) => void) | undefined = undefined;
+	export let onThemeSelected: ((noteId: string, theme: BackgroundThemeValue) => void) | undefined =
+		undefined;
 
 	const themes = [
 		{ id: 'yellow_sticky', label: 'Yellow Sticky', color: '#ffd54f' },
@@ -13,7 +12,7 @@
 		{ id: 'kraft_paper', label: 'Kraft Paper', color: '#d7ccc8' },
 		{ id: 'postcard', label: 'Postcard', color: '#fff9c4' },
 		{ id: 'blue_sticky', label: 'Blue Sticky', color: '#81d4fa' },
-		{ id: 'scrap', label: 'Scrap', color: '#ffccbc' }
+		{ id: 'scrap', label: 'Scrap', color: '#ffccbc' },
 	];
 
 	let isOpen = false;
@@ -40,11 +39,11 @@
 			const response = await fetch(`/api/notes/${selectedNoteId}`, {
 				method: 'PATCH',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					backgroundTheme: selectedTheme
-				})
+					backgroundTheme: selectedTheme,
+				}),
 			});
 
 			if (!response.ok) {
@@ -95,10 +94,7 @@
 						on:click={() => handleSelectTheme(theme.id as BackgroundThemeValue)}
 						title={theme.label}
 					>
-						<div
-							class="theme-preview"
-							style="background-color: {theme.color};"
-						></div>
+						<div class="theme-preview" style="background-color: {theme.color};"></div>
 						<span class="theme-name">{theme.label}</span>
 					</button>
 				{/each}
@@ -111,16 +107,12 @@
 					disabled={!selectedTheme || isApplying}
 				>
 					{#if isApplying}
-						<span class="spinner" /> Applying...
+						<span class="spinner"></span> Applying...
 					{:else}
 						Apply Theme
 					{/if}
 				</button>
-				<button
-					class="btn-cancel"
-					on:click={() => (isOpen = false)}
-					disabled={isApplying}
-				>
+				<button class="btn-cancel" on:click={() => (isOpen = false)} disabled={isApplying}>
 					Cancel
 				</button>
 			</div>

@@ -10,8 +10,7 @@ describe('Utility: Validation', () => {
 	});
 
 	it('validates strong password', () => {
-		const validatePassword = (password: string) =>
-			password.length >= 8 && /[A-Z]/.test(password);
+		const validatePassword = (password: string) => password.length >= 8 && /[A-Z]/.test(password);
 
 		expect(validatePassword('StrongPass123')).toBe(true);
 		expect(validatePassword('weak')).toBe(false);
@@ -23,7 +22,7 @@ describe('Async: API Calls', () => {
 	it('fetches data successfully', async () => {
 		const mockFetch = vi.fn().mockResolvedValue({
 			ok: true,
-			json: async () => ({ success: true, data: [] })
+			json: async () => ({ success: true, data: [] }),
 		});
 
 		vi.stubGlobal('fetch', mockFetch);

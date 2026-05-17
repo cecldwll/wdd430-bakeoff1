@@ -23,9 +23,9 @@
 			const response = await fetch('/api/auth/login', {
 				method: 'POST',
 				headers: {
-					'Content-Type': 'application/json'
+					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ email, password })
+				body: JSON.stringify({ email, password }),
 			});
 
 			const data = await response.json();
@@ -117,7 +117,7 @@
 		gap: 1rem;
 	}
 
-	.submit-btn {
+	:global(.submit-btn) {
 		width: 100%;
 		margin-top: 0.5rem;
 	}

@@ -17,8 +17,8 @@ const getProfileClient = () => {
 	return createClient(supabaseUrl, serviceRoleKey, {
 		auth: {
 			autoRefreshToken: false,
-			persistSession: false
-		}
+			persistSession: false,
+		},
 	});
 };
 
@@ -51,23 +51,17 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			options: {
 				emailRedirectTo: `${new URL(request.url).origin}/auth/callback`,
 				data: {
-					username
-				}
-			}
+					username,
+				},
+			},
 		});
 
 		if (authError) {
-			return json(
-				{ message: `Sign up error: ${authError.message}` },
-				{ status: 400 }
-			);
+			return json({ message: `Sign up error: ${authError.message}` }, { status: 400 });
 		}
 
 		if (!authData.user) {
-			return json(
-				{ message: 'Sign up failed. Please try again.' },
-				{ status: 500 }
-			);
+			return json({ message: 'Sign up failed. Please try again.' }, { status: 500 });
 		}
 
 		// Create user profile in database
@@ -81,7 +75,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			reset_password_token: null,
 			created_at: new Date().toISOString(),
 			updated_at: new Date().toISOString(),
-			settings: {}
+			settings: {},
 		});
 
 		if (profileError) {
@@ -90,7 +84,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				{
 					message:
 						'Account was created in Supabase Auth, but the app profile could not be saved. Check SUPABASE_SERVICE_ROLE_KEY and users table RLS policies.',
-					details: profileError.message
+					details: profileError.message,
 				},
 				{ status: 500 }
 			);
@@ -102,25 +96,20 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				message: 'Sign up successful! Please check your email to verify.',
 				user: {
 					id: authData.user.id,
-					email: authData.user.email
-				}
+					email: authData.user.email,
+				},
 			},
 			{ status: 201 }
 		);
 	} catch (error) {
 		// Handle validation errors
 		if (error instanceof ZodError) {
-			const fieldErrors = Object.fromEntries(
-				error.issues.map((err) => [
-					err.path[0],
-					err.message
-				])
-			);
+			const fieldErrors = Object.fromEntries(error.issues.map((err) => [err.path[0], err.message]));
 
 			return json(
 				{
 					message: 'Validation error',
-					errors: fieldErrors
+					errors: fieldErrors,
 				},
 				{ status: 400 }
 			);
@@ -128,9 +117,6 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 		// Handle other errors
 		console.error('Signup error:', error);
-		return json(
-			{ message: 'An unexpected error occurred. Please try again.' },
-			{ status: 500 }
-		);
+		return json({ message: 'An unexpected error occurred. Please try again.' }, { status: 500 });
 	}
 };
