@@ -39,7 +39,7 @@ export const UserSchema = z.object({
 	emailVerified: z.boolean(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date(),
-	settings: z.record(z.unknown()).optional()
+	settings: z.record(z.string(), z.unknown()).optional()
 });
 
 export type User = z.infer<typeof UserSchema>;
@@ -85,6 +85,8 @@ export const BackgroundTheme = z.enum([
 	'scrap'
 ]);
 
+export type BackgroundThemeValue = z.infer<typeof BackgroundTheme>;
+
 export const CreateNoteSchema = z.object({
 	scrapboardId: z.string().uuid(),
 	type: NoteType,
@@ -103,7 +105,8 @@ export const UpdateNoteSchema = z.object({
 	positionY: z.number().optional(),
 	width: z.number().optional(),
 	height: z.number().optional(),
-	backgroundTheme: BackgroundTheme.optional()
+	backgroundTheme: BackgroundTheme.optional(),
+	zOrder: z.number().optional()
 });
 
 export const NoteSchema = z.object({
@@ -224,7 +227,7 @@ export const ApiErrorSchema = z.object({
 	error: z.string(),
 	message: z.string(),
 	status: z.number(),
-	details: z.record(z.unknown()).optional()
+	details: z.record(z.string(), z.unknown()).optional()
 });
 
 export const ApiSuccessSchema = z.object({

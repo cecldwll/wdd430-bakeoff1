@@ -9,7 +9,7 @@ export const createSupabaseServerClient = ({ request, cookies }: RequestEvent) =
 
 	return createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
-			getAll: () => request.headers.getSetCookie(),
+			getAll: () => cookies.getAll(),
 			setAll: (cookiesToSet) => {
 				cookiesToSet.forEach(({ name, value, options }) => {
 					cookies.set(name, value, { path: '/', ...options });
@@ -55,10 +55,13 @@ export const getAuthenticatedUser = async (event: RequestEvent) => {
 	}
 
 	return {
-		...userProfile,
+		id: userProfile.id,
+		email: userProfile.email,
+		username: userProfile.username,
 		emailVerified: userProfile.email_verified,
 		createdAt: new Date(userProfile.created_at),
-		updatedAt: new Date(userProfile.updated_at)
+		updatedAt: new Date(userProfile.updated_at),
+		settings: userProfile.settings ?? {}
 	};
 };
 
@@ -238,15 +241,12 @@ export const requestPasswordReset = async (event: RequestEvent, email: string) =
  */
 export const updatePasswordWithToken = async (
 	event: RequestEvent,
-	accessToken: string,
+	_accessToken: string,
 	newPassword: string
 ) => {
 	const supabase = createSupabaseServerClient(event);
 
-	const { error } = await supabase.auth.updateUser(
-		{ password: newPassword },
-		{ accessToken }
-	);
+	const { error } = await supabase.auth.updateUser({ password: newPassword });
 
 	if (error) {
 		throw new Error(`Password update error: ${error.message}`);

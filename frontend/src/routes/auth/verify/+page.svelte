@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { goto, invalidate } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { Button, Input } from '$lib/components/ui';
-	import { user, setUser } from '$lib/stores/user';
+	import { onDestroy } from 'svelte';
+	import { Button, Input } from '../../../components/ui';
+	import { setUser } from '$lib/stores/user';
 	import { addNotification } from '$lib/stores/ui';
 
 	let email = '';
@@ -10,6 +11,7 @@
 	let isLoading = false;
 	let timeRemaining = 300; // 5 minutes
 	let canResend = false;
+	let timer: ReturnType<typeof setTimeout> | null = null;
 
 	$: {
 		const urlEmail = $page.url.searchParams.get('email');
@@ -18,15 +20,18 @@
 		}
 	}
 
-	// Countdown timer
 	$: if (timeRemaining > 0 && !canResend) {
-		const timer = setTimeout(() => {
+		if (timer) clearTimeout(timer);
+		timer = setTimeout(() => {
 			timeRemaining -= 1;
 		}, 1000);
-		return () => clearTimeout(timer);
 	} else if (timeRemaining === 0) {
 		canResend = true;
 	}
+
+	onDestroy(() => {
+		if (timer) clearTimeout(timer);
+	});
 
 	const formatTime = (seconds: number) => {
 		const mins = Math.floor(seconds / 60);
@@ -50,7 +55,7 @@
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ token: verificationCode })
+				body: JSON.stringify({ email, token: verificationCode })
 			});
 
 			const data = await response.json();

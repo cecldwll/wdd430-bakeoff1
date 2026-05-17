@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui';
+	import { Button } from './ui';
 	import { addNotification } from '$lib/stores/ui';
 	import type { Note } from '$lib/schemas';
 

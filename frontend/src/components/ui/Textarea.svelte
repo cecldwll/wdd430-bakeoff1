@@ -1,15 +1,12 @@
 <script lang="ts">
-	interface $$Props {
-		label?: string;
-		value?: string;
-		placeholder?: string;
-		disabled?: boolean;
-		rows?: number;
-		error?: string;
-		class?: string;
-	}
-
-	let { label, value = '', placeholder = '', disabled = false, rows = 3, error = '', class: className = '' } = $$props;
+	export let label: string | undefined = undefined;
+	export let value = '';
+	export let placeholder = '';
+	export let disabled = false;
+	export let rows = 3;
+	export let error = '';
+	let className = '';
+	export { className as class };
 </script>
 
 <div class="textarea-group {className}">
@@ -19,7 +16,7 @@
 	<textarea
 		id="textarea"
 		{placeholder}
-		{value}
+		bind:value
 		{disabled}
 		{rows}
 		class:has-error={!!error}
@@ -27,7 +24,7 @@
 		on:change
 		on:focus
 		on:blur
-	/>
+	></textarea>
 	{#if error}
 		<span class="error-message">{error}</span>
 	{/if}

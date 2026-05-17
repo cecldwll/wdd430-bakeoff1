@@ -4,6 +4,7 @@
 		size?: 'sm' | 'md' | 'lg';
 		disabled?: boolean;
 		type?: string;
+		title?: string;
 		class?: string;
 	}
 

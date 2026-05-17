@@ -1,16 +1,12 @@
 <script lang="ts">
-	interface $$Props {
-		label?: string;
-		type?: string;
-		placeholder?: string;
-		value?: string;
-		disabled?: boolean;
-		error?: string;
-		class?: string;
-	}
-
-	let { label, type = 'text', placeholder = '', value = '', disabled = false, error = '', class: className = '' } =
-		$$props;
+	export let label: string | undefined = undefined;
+	export let type = 'text';
+	export let placeholder = '';
+	export let value = '';
+	export let disabled = false;
+	export let error = '';
+	let className = '';
+	export { className as class };
 </script>
 
 <div class="input-group {className}">
@@ -21,7 +17,7 @@
 		id="input"
 		{type}
 		{placeholder}
-		{value}
+		bind:value
 		{disabled}
 		on:input
 		on:change

@@ -2,6 +2,17 @@ import { json } from '@sveltejs/kit';
 import { UpdateNoteSchema } from '$lib/schemas';
 import type { RequestHandler } from './$types';
 
+type NoteWithOwner = {
+	id: string;
+	scrapboard_id: string;
+	scrapboards: { owner_user_id: string } | { owner_user_id: string }[];
+};
+
+const getOwnerId = (note: NoteWithOwner) => {
+	const scrapboard = Array.isArray(note.scrapboards) ? note.scrapboards[0] : note.scrapboards;
+	return scrapboard?.owner_user_id;
+};
+
 /**
  * PATCH /api/notes/[id]
  * Update a note's properties (content, position, size, theme)
@@ -49,7 +60,7 @@ export const PATCH: RequestHandler = async ({ params, request, locals }) => {
 			return json({ message: 'Note not found' }, { status: 404 });
 		}
 
-		if (note.scrapboards.owner_user_id !== user.id) {
+		if (getOwnerId(note as NoteWithOwner) !== user.id) {
 			return json({ message: 'Forbidden' }, { status: 403 });
 		}
 
@@ -160,7 +171,7 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 			return json({ message: 'Note not found' }, { status: 404 });
 		}
 
-		if (note.scrapboards.owner_user_id !== user.id) {
+		if (getOwnerId(note as NoteWithOwner) !== user.id) {
 			return json({ message: 'Forbidden' }, { status: 403 });
 		}
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Input, Select, Textarea } from '$lib/components/ui';
+	import { Button, Input, Select, Textarea } from './ui';
 	import { BackgroundTheme } from '$lib/schemas';
 	import { addNotification } from '$lib/stores/ui';
 	import type { z } from 'zod';
@@ -58,7 +58,7 @@
 
 			if (!response.ok) {
 				error = data.message || 'Failed to create note';
-				addNotification(error, 'error');
+				addNotification(error ?? 'Failed to create note', 'error');
 				return;
 			}
 

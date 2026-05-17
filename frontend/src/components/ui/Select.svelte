@@ -4,16 +4,13 @@
 		label: string;
 	}
 
-	interface $$Props {
-		label?: string;
-		options: Option[];
-		value?: string;
-		disabled?: boolean;
-		error?: string;
-		class?: string;
-	}
-
-	let { label, options, value = '', disabled = false, error = '', class: className = '' } = $$props;
+	export let label: string | undefined = undefined;
+	export let options: Option[] = [];
+	export let value = '';
+	export let disabled = false;
+	export let error = '';
+	let className = '';
+	export { className as class };
 </script>
 
 <div class="select-group {className}">
@@ -22,7 +19,7 @@
 	{/if}
 	<select
 		id="select"
-		{value}
+		bind:value
 		{disabled}
 		class:has-error={!!error}
 		on:change

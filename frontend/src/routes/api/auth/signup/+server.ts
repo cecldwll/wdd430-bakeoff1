@@ -2,6 +2,25 @@ import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { SignUpSchema } from '$lib/schemas';
 import { ZodError } from 'zod';
+import { createClient } from '@supabase/supabase-js';
+import { env as publicEnv } from '$env/dynamic/public';
+import { env as privateEnv } from '$env/dynamic/private';
+
+const getProfileClient = () => {
+	const supabaseUrl = publicEnv.PUBLIC_SUPABASE_URL;
+	const serviceRoleKey = privateEnv.SUPABASE_SERVICE_ROLE_KEY;
+
+	if (!supabaseUrl || !serviceRoleKey) {
+		return null;
+	}
+
+	return createClient(supabaseUrl, serviceRoleKey, {
+		auth: {
+			autoRefreshToken: false,
+			persistSession: false
+		}
+	});
+};
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
@@ -9,12 +28,14 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		const body = await request.json();
 		const { email, password, username } = SignUpSchema.parse(body);
 
+		const profileClient = getProfileClient() ?? locals.supabase;
+
 		// Check if user already exists
-		const { data: existingUser } = await locals.supabase
+		const { data: existingUser } = await profileClient
 			.from('users')
 			.select('id')
 			.eq('email', email)
-			.single();
+			.maybeSingle();
 
 		if (existingUser) {
 			return json(
@@ -28,7 +49,10 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			email,
 			password,
 			options: {
-				emailRedirectTo: `${new URL(request.url).origin}/auth/callback`
+				emailRedirectTo: `${new URL(request.url).origin}/auth/callback`,
+				data: {
+					username
+				}
 			}
 		});
 
@@ -47,7 +71,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		}
 
 		// Create user profile in database
-		const { error: profileError } = await locals.supabase.from('users').insert({
+		const { error: profileError } = await profileClient.from('users').upsert({
 			id: authData.user.id,
 			email,
 			username,
@@ -62,7 +86,14 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 
 		if (profileError) {
 			console.error('Error creating user profile:', profileError);
-			// Still consider signup successful since auth user was created
+			return json(
+				{
+					message:
+						'Account was created in Supabase Auth, but the app profile could not be saved. Check SUPABASE_SERVICE_ROLE_KEY and users table RLS policies.',
+					details: profileError.message
+				},
+				{ status: 500 }
+			);
 		}
 
 		return json(
@@ -80,7 +111,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 		// Handle validation errors
 		if (error instanceof ZodError) {
 			const fieldErrors = Object.fromEntries(
-				error.errors.map((err) => [
+				error.issues.map((err) => [
 					err.path[0],
 					err.message
 				])

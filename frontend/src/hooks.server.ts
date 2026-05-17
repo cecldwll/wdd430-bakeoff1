@@ -10,17 +10,11 @@ import { env } from '$env/dynamic/public';
 export const handle: Handle = async ({ event, resolve }) => {
 	const supabaseUrl = env.PUBLIC_SUPABASE_URL || '';
 	const supabaseAnonKey = env.PUBLIC_SUPABASE_ANON_KEY || '';
-	console.error('HOOK ENV KEYS', Object.keys(env).filter((key) => key.includes('SUPABASE')));
-	console.error('HOOK PROCESS ENV KEYS', Object.keys(process.env).filter((key) => key.includes('SUPABASE')));
-	console.error('HOOK ENV', {
-		PUBLIC_SUPABASE_URL: supabaseUrl ? 'loaded' : 'missing',
-		PUBLIC_SUPABASE_ANON_KEY: supabaseAnonKey ? 'loaded' : 'missing'
-	});
 
 	// Create Supabase client
 	event.locals.supabase = createServerClient(supabaseUrl, supabaseAnonKey, {
 		cookies: {
-			getAll: () => event.request.headers.getSetCookie(),
+			getAll: () => event.cookies.getAll(),
 			setAll: (cookiesToSet) => {
 				cookiesToSet.forEach(({ name, value, options }) => {
 					event.cookies.set(name, value, { path: '/', ...options });
@@ -61,10 +55,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 
 		return {
-			...userProfile,
+			id: userProfile.id,
+			email: userProfile.email,
+			username: userProfile.username,
 			emailVerified: userProfile.email_verified,
 			createdAt: new Date(userProfile.created_at),
-			updatedAt: new Date(userProfile.updated_at)
+			updatedAt: new Date(userProfile.updated_at),
+			settings: userProfile.settings ?? {}
 		};
 	};
 

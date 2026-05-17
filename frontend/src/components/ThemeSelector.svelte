@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui';
+	import { Button } from './ui';
 	import { addNotification } from '$lib/stores/ui';
+	import type { BackgroundThemeValue } from '$lib/schemas';
 
 	export let scrapboardId: string;
 	export let selectedNoteId: string | null = null;
-	export let onThemeSelected: ((noteId: string, theme: string) => void) | undefined = undefined;
+	export let onThemeSelected: ((noteId: string, theme: BackgroundThemeValue) => void) | undefined = undefined;
 
 	const themes = [
 		{ id: 'yellow_sticky', label: 'Yellow Sticky', color: '#ffd54f' },
@@ -17,13 +18,13 @@
 
 	let isOpen = false;
 	let isApplying = false;
-	let selectedTheme: string | null = null;
+	let selectedTheme: BackgroundThemeValue | null = null;
 
 	function handleToggle() {
 		isOpen = !isOpen;
 	}
 
-	function handleSelectTheme(themeId: string) {
+	function handleSelectTheme(themeId: BackgroundThemeValue) {
 		selectedTheme = themeId;
 	}
 
@@ -91,7 +92,7 @@
 					<button
 						class="theme-option"
 						class:selected={selectedTheme === theme.id}
-						on:click={() => handleSelectTheme(theme.id)}
+						on:click={() => handleSelectTheme(theme.id as BackgroundThemeValue)}
 						title={theme.label}
 					>
 						<div

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Button } from '$lib/components/ui';
+	import { Button } from '../../components/ui';
 	import { user } from '$lib/stores/user';
 	import { addNotification } from '$lib/stores/ui';
 	import type { PageData } from './$types';

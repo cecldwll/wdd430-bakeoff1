@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { Button } from '$lib/components/ui';
-	import Note from '$lib/components/Note.svelte';
-	import NoteCreator from '$lib/components/NoteCreator.svelte';
-	import DrawingCanvas from '$lib/components/DrawingCanvas.svelte';
-	import ThemeSelector from '$lib/components/ThemeSelector.svelte';
+	import { Button } from '../../../components/ui';
+	import Note from '../../../components/Note.svelte';
+	import NoteCreator from '../../../components/NoteCreator.svelte';
+	import DrawingCanvas from '../../../components/DrawingCanvas.svelte';
+	import ThemeSelector from '../../../components/ThemeSelector.svelte';
 	import { createUndoRedoStore } from '$lib/undo';
 	import { useAutoSave } from '$lib/autosave';
 	import { addNotification } from '$lib/stores/ui';
@@ -112,7 +112,8 @@
 				type: 'delete',
 				elementType: 'note',
 				elementId: noteId,
-				previousState: deletedNote
+				previousState: deletedNote,
+				currentState: deletedNote
 			});
 		} catch (error) {
 			console.error('Error deleting note:', error);

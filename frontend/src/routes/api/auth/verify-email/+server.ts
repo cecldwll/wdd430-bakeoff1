@@ -4,7 +4,7 @@ import type { RequestHandler } from './$types';
 export const POST: RequestHandler = async ({ request, locals, url }) => {
 	try {
 		// Get the token from query parameters or request body
-		const { token } = await request.json();
+		const { email, token } = await request.json();
 
 		if (!token) {
 			return json(
@@ -14,10 +14,16 @@ export const POST: RequestHandler = async ({ request, locals, url }) => {
 		}
 
 		// Verify the email with Supabase
-		const { data, error } = await locals.supabase.auth.verifyOtp({
-			token_hash: token,
-			type: 'email'
-		});
+		const { data, error } = email
+			? await locals.supabase.auth.verifyOtp({
+					email,
+					token,
+					type: 'signup'
+				})
+			: await locals.supabase.auth.verifyOtp({
+					token_hash: token,
+					type: 'signup'
+				});
 
 		if (error) {
 			return json(
